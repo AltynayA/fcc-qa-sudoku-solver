@@ -23,9 +23,6 @@ module.exports = function (app) {
                 return res.json({ error: 'Invalid coordinate' });
             }
 
-            // if (!solver.validateValue(value)) {
-            //     return res.json({ error: 'Invalid value' });
-            // }
             const numValue = Number(value);
             if (!solver.validateValue(numValue)) {
                 return res.json({ error: 'Invalid value' });

@@ -93,10 +93,7 @@ class SudokuSolver {
 
     validateValue(value)
     {
-        if (value < 1 || value > 9) {
-            return false
-        }
-        return true
+        return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= 9;
     }
 
     checkColPlacement(board, row, column, value)
