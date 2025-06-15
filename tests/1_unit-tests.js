@@ -24,22 +24,22 @@ suite('Unit Tests', () => {
     // #4
     test('Logic handles a valid row placement', () => {
         solver.convert(puzzlesAndSolutions[1][0])
-        assert.isTrue(solver.checkRowPlacement(0,1,6))
+        assert.isTrue(solver.checkRowPlacement(solver.sudoku, 0,1,6))
     })
     // #5
     test('Logic handles an invalid row placement', () => {
         solver.convert(puzzlesAndSolutions[1][0])
-        assert.isFalse(solver.checkRowPlacement(0,1,5))
+        assert.isFalse(solver.checkRowPlacement(solver.sudoku,0,1,5))
     })
     // #6
     test('Logic handles a valid column placement', () => {
         solver.convert(puzzlesAndSolutions[2][0])
-        assert.isTrue(solver.checkColPlacement(solver,0,7,1))
+        assert.isTrue(solver.checkColPlacement(solver.sudoku,0,7,1))
     })
     // #7
     test('Logic handles an invalid column placement', () => {
         solver.convert(puzzlesAndSolutions[2][0])
-        assert.isFalse(solver.checkColPlacement(solver,0,7,9))
+        assert.isFalse(solver.checkColPlacement(solver.sudoku,0,7,9))
     })
     // #8
     test('Logic handles a valid region (3x3 grid) placement', () => {
@@ -53,7 +53,7 @@ suite('Unit Tests', () => {
     })
     // #10
     test('Valid puzzle strings pass the solver', () => {
-        let result = solver.solve(puzzlesAndSolutions[4][0])
+        let result = solver.solve(puzzlesAndSolutions[2][0])
         assert.isTrue(result)
     })
     // #11

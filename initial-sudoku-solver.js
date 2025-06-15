@@ -1,4 +1,4 @@
-class SudokuSolver {
+class InitialSudokuSolver {
     // rows = 9;
     // cols = 9;
     // sudoku = Array.from({length: rows}, () => Array(cols).fill(0));
@@ -47,21 +47,13 @@ class SudokuSolver {
         return true;
     }
 
-    // parseRowColumn(rowcolumn)
-    // {
-    //     let row = rowcolumn[0] - 65
-    //     let column = rowcolumn[1] - 49
-    //     return {row, column}
-    // }
-    parseRowColumn(rowcolumn) {
-        let rowChar = rowcolumn[0].toUpperCase(); // 'A' to 'I'
-        let colChar = rowcolumn[1]; // '1' to '9'
-
-        let row = rowChar.charCodeAt(0) - 'A'.charCodeAt(0); // A=0, B=1, ..., I=8
-        let column = parseInt(colChar, 10) - 1; // 1=0, 2=1, ..., 9=8
-
-        return { row, column };
+    parseRowColumn(rowcolumn)
+    {
+        let row = rowcolumn[0] - 65
+        let column = rowcolumn[1] - 49
+        return {row, column}
     }
+
     validateRowColumn(rowcolumn)
     {
         if (rowcolumn.length != 2) {
@@ -78,7 +70,7 @@ class SudokuSolver {
         return true
     }
 
-    checkRowPlacement(board, row, column, value)
+    checkRowPlacement(row, column, value)
     {
         if (this.sudoku[row][column] != 0) {
             return false
@@ -99,7 +91,7 @@ class SudokuSolver {
         return true
     }
 
-    checkColPlacement(board, row, column, value)
+    checkColPlacement(puzzleString, row, column, value)
     {
         if (this.sudoku[row][column] != 0) {
             return false
@@ -127,14 +119,14 @@ class SudokuSolver {
     }
 
 
-    checkRegionPlacement(board, row, column, value)
+    checkRegionPlacement(puzzleString, row, column, value)
     {
         let region = this.findRegion(row,column)
         let startr = region[0]
         let startc = region[1]
         for (let r = startr; r < startr + 3; r++) {
             for (let c = startc; c < startc + 3; c++) {
-                if (board[r][c] == value) {
+                if (puzzleString[r][c] == value) {
                     return false
                 }
             }
@@ -151,7 +143,7 @@ class SudokuSolver {
                     for (let val = 1; val <= 9; val++) {
                         if (
                             this.validateValue(val) &&
-                            this.checkRowPlacement(this.sudoku, row, col, val) !== false &&
+                            this.checkRowPlacement(row, col, val) !== false &&
                             this.checkColPlacement(this.sudoku, row, col, val) !== false &&
                             this.checkRegionPlacement(this.sudoku, row, col, val)
                         ) {
@@ -167,34 +159,13 @@ class SudokuSolver {
         return true;
     }
 
-    solve(puzzleString) {
+    solve(puzzleString)
+    {
         if (!this.validateLength(puzzleString)) return false;
-        if (!this.validateContent(puzzleString)) return false;
-
         this.convert(puzzleString);
-
-        for (let row = 0; row < 9; row++) {
-            for (let col = 0; col < 9; col++) {
-                let val = this.sudoku[row][col];
-                if (val !== 0) {
-                    this.sudoku[row][col] = 0;
-                    if (
-                        !this.checkRowPlacement(this.sudoku, row, col, val) ||
-                        !this.checkColPlacement(this.sudoku, row, col, val) ||
-                        !this.checkRegionPlacement(this.sudoku, row, col, val)
-                    ) {
-                        return false;
-                    }
-                    this.sudoku[row][col] = val;
-                }
-            }
-        }
-
         return this.solveSudoku();
     }
-
 }
 
 module.exports = SudokuSolver;
-
 
