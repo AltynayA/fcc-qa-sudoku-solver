@@ -131,7 +131,7 @@ suite('Functional Tests', () => {
                 coordinate: '',
                 value: 2
             }).end((err, res) => {
-                assert.equal(res.body.error, 'Required field missing')
+                assert.equal(res.body.error, 'Required field(s) missing')
                 done();
             })
         })
